@@ -7,7 +7,7 @@ const Header = () => (
   <AppBar position="static">
     <Toolbar>
       <Typography variant="title" color="inherit">
-        Repotreator
+        GiTreator
       </Typography>
     </Toolbar>
   </AppBar>
