@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -23,8 +23,8 @@ class UsersStore {
         tap(this.startSearching),
         switchMap(getUsers$),
         tap(this.stopSearching),
-        tap(this.handleSearchUserErrors),
-        map(response => response.search.nodes.filter(node => node.id))
+        filter(x => !x.error),
+        map(this.extractUsersFromResponse)
       )
       .subscribe(this.setUsers);
   }
@@ -54,10 +54,9 @@ class UsersStore {
   @action clearUsers = () => (this.users = []);
 
   @action
-  handleSearchUserErrors = response => {
-    if (response.status !== 403) {
-      this.error = 'API limit reached, try again in one minute';
-    }
+  handleSearchUserErrors = error => {
+    this.error = 'There was a problem in the server, please try again';
+    return of({ error: true });
   };
 
   @action
@@ -65,6 +64,9 @@ class UsersStore {
     this.filter = user.login;
     this.users = [];
   };
+
+  extractUsersFromResponse = response =>
+    response.search.nodes.filter(node => node.id);
 }
 
 export default UsersStore;

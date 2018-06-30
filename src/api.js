@@ -32,5 +32,9 @@ const getUsersQuery = `
   }
 `;
 
-export const getUsers$ = query =>
-  from(client.request(getUsersQuery, { query })).pipe(catchError(of));
+const request = (query, variables = {}) =>
+  from(client.request(query, variables)).pipe(
+    catchError(() => of({ error: true }))
+  );
+
+export const getUsers$ = query => request(getUsersQuery, { query });
