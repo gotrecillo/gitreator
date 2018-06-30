@@ -15,8 +15,9 @@ class UserList extends Component {
       users: MobxPropTypes.observableArrayOf(
         PropTypes.shape({
           id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
           login: PropTypes.string.isRequired,
-          avatar_url: PropTypes.string.isRequired
+          avatarUrl: PropTypes.string.isRequired
         })
       )
     })
@@ -31,8 +32,8 @@ class UserList extends Component {
       <List>
         {users.map(user => (
           <ListItem key={user.id} dense button onClick={() => selectUser(user)}>
-            <Avatar alt={user.login} src={user.avatar_url} />
-            <ListItemText primary={user.login} />
+            <Avatar alt={user.login} src={user.avatarUrl} />
+            <ListItemText secondary={user.name} primary={user.login} />
           </ListItem>
         ))}
       </List>

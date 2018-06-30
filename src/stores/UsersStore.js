@@ -24,8 +24,7 @@ class UsersStore {
         switchMap(getUsers$),
         tap(this.stopSearching),
         tap(this.handleSearchUserErrors),
-        filter(x => x.status === 200),
-        map(x => x.response.items)
+        map(response => response.search.nodes.filter(node => node.id))
       )
       .subscribe(this.setUsers);
   }
