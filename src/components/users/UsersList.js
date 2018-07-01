@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import { observer, inject } from 'mobx-react';
 
-@inject('usersStore')
+@inject('usersStore', 'detailsStore')
 @observer
 class UserList extends Component {
   static propTypes = {
@@ -19,19 +19,32 @@ class UserList extends Component {
           login: PropTypes.string.isRequired,
           avatarUrl: PropTypes.string.isRequired
         })
-      )
+      ),
+      selectUser: PropTypes.func.isRequired
+    }),
+    detailsStore: PropTypes.shape({
+      setUser: PropTypes.func.isRequired,
+      fetchDetails: PropTypes.func.isRequired
     })
+  };
+
+  selectUser = user => () => {
+    const { usersStore, detailsStore } = this.props;
+
+    usersStore.selectUser(user);
+    detailsStore.setUser(user);
+    detailsStore.fetchDetails(user.login);
   };
 
   render() {
     const { usersStore } = this.props;
 
-    const { users, selectUser } = usersStore;
+    const { users } = usersStore;
 
     return (
       <List>
         {users.map(user => (
-          <ListItem key={user.id} dense button onClick={() => selectUser(user)}>
+          <ListItem key={user.id} dense button onClick={this.selectUser(user)}>
             <Avatar alt={user.login} src={user.avatarUrl} />
             <ListItemText secondary={user.name} primary={user.login} />
           </ListItem>

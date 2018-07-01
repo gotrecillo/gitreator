@@ -13,23 +13,81 @@ const client = new GraphQLClient(BASE_URL, {
   headers
 });
 
+const repositoryInfoFragment = `
+  fragment repositoryInfo on Repository {
+    id
+    name
+    updatedAt
+    url
+    description
+    languages(first: 1) {
+      nodes {
+        color
+        id
+        name
+      }
+    }
+    stargazers {
+      totalCount
+    }
+    forkCount
+  }
+`;
+
+const userInfoFragment = `
+  fragment userInfo on User {
+    id
+    login
+    avatarUrl
+    bio
+    name
+  }
+`;
+
 const getUsersQuery = `
   query($query: String!) {
     search(type: USER, query: $query, first: 10) {
       nodes {
         ... on User {
-          id
-          login
-          avatarUrl
-          bio
-          name
-          starredRepositories {
-            totalCount
-          }
+          ...userInfo
         }
       }
     }
   }
+  ${userInfoFragment}
+`;
+
+const getDetailsQuery = `
+  query($user: String!) {
+    user(login: $user) {
+      ...userInfo
+      starredRepositories(first: 100) {
+        nodes {
+          ...repositoryInfo
+        }
+      }
+      organizations(first: 100) {
+        nodes {
+          id
+          avatarUrl
+          name
+          description
+          url
+          websiteUrl
+          members {
+            totalCount
+          }
+        }
+      }
+      repositories(first: 100) {
+        nodes {
+          ...repositoryInfo
+        }
+      }
+    }
+  }
+  ${userInfoFragment}
+  ${repositoryInfoFragment}
 `;
 
 const request = (query, variables = {}) =>
@@ -38,3 +96,4 @@ const request = (query, variables = {}) =>
   );
 
 export const getUsers$ = query => request(getUsersQuery, { query });
+export const getUserDetails$ = user => request(getDetailsQuery, { user });

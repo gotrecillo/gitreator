@@ -1,4 +1,6 @@
 import 'raf/polyfill';
+import 'typeface-roboto';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -6,21 +6,25 @@ import { Provider } from 'mobx-react';
 
 import Header from './layout/Header';
 import Container from './layout/Container';
-import Searcher from './Searcher';
+import UsersSearcher from './components/users/UsersSearcher';
 import UsersStore from './stores/UsersStore';
+import DetailsStore from './stores/DetailsStore';
+import UserDetails from './components/users/UserDetails';
 
 const theme = createMuiTheme();
 
 const usersStore = new UsersStore();
+const detailsStore = new DetailsStore();
 
 const App = () => (
-  <Provider usersStore={usersStore}>
+  <Provider usersStore={usersStore} detailsStore={detailsStore}>
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <DevTools />
       <Header />
       <Container>
-        <Searcher />
+        <UsersSearcher />
+        <UserDetails />
       </Container>
     </MuiThemeProvider>
   </Provider>

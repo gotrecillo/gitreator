@@ -16,22 +16,27 @@ const styles = theme => ({
   }
 });
 
-@inject('usersStore')
+@inject('usersStore', 'detailsStore')
 @observer
-class Searcher extends Component {
+class UsersSearcher extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     usersStore: PropTypes.shape({
       search: PropTypes.func.isRequired,
       loading: PropTypes.bool.isRequired,
       filter: PropTypes.string.isRequired
+    }),
+    detailsStore: PropTypes.shape({
+      clear: PropTypes.func.isRequired
     })
   };
 
   onChange = e => {
-    const { usersStore } = this.props;
+    const { usersStore, detailsStore } = this.props;
 
     const query = e.target.value;
+
+    detailsStore.clear();
     usersStore.search(query);
   };
 
@@ -67,4 +72,4 @@ class Searcher extends Component {
   }
 }
 
-export default withStyles(styles)(Searcher);
+export default withStyles(styles)(UsersSearcher);
