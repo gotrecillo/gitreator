@@ -1,7 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import DevTools from 'mobx-react-devtools';
 import { Provider } from 'mobx-react';
 
 import Header from './layout/Header';
@@ -27,7 +26,6 @@ const App = () => (
   <Provider usersStore={usersStore} detailsStore={detailsStore}>
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <DevTools />
       <Header />
       <Container>
         <UsersSearcher />
