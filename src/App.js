@@ -10,6 +10,7 @@ import UsersSearcher from './components/users/UsersSearcher';
 import UsersStore from './stores/UsersStore';
 import DetailsStore from './stores/DetailsStore';
 import UserDetails from './components/users/UserDetails';
+import ScrollTop from './components/ScrollTop';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,6 +33,7 @@ const App = () => (
         <UsersSearcher />
         <UserDetails />
       </Container>
+      <ScrollTop />
     </MuiThemeProvider>
   </Provider>
 );

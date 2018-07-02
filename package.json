@@ -18,6 +18,8 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "rxjs": "^6.2.1",
+    "scroll-to": "^0.0.2",
+    "tween": "^0.9.0",
     "typeface-roboto": "^0.0.54"
   },
   "scripts": {
