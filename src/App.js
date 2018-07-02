@@ -11,7 +11,13 @@ import UsersStore from './stores/UsersStore';
 import DetailsStore from './stores/DetailsStore';
 import UserDetails from './components/users/UserDetails';
 
-const theme = createMuiTheme();
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#6a0a9c'
+    }
+  }
+});
 
 const usersStore = new UsersStore();
 const detailsStore = new DetailsStore();
