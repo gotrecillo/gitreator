@@ -65,6 +65,11 @@ class DetailsStore {
   }
 
   @computed
+  get organizations() {
+    return this.user.organizations ? this.user.organizations.nodes : [];
+  }
+
+  @computed
   get starredRepositories() {
     return this.user.starredRepositories
       ? this.user.starredRepositories.nodes

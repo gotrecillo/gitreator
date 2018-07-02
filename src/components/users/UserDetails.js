@@ -13,6 +13,7 @@ import { observer, inject } from 'mobx-react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Repositories from '../repositories/Repositories';
+import Organizations from '../organizations/Organizations';
 
 const styles = theme => ({
   card: {
@@ -80,8 +81,16 @@ class UserDetails extends Component {
         </AppBar>
         {!loading && (
           <div>
-            {tab === 0 && <Repositories repositories={repositories} />}
-            {tab === 2 && <Repositories repositories={starredRepositories} />}
+            {tab === 0 && (
+              <Repositories title="repositories" repositories={repositories} />
+            )}
+            {tab === 1 && <Organizations />}
+            {tab === 2 && (
+              <Repositories
+                title="starred repositories"
+                repositories={starredRepositories}
+              />
+            )}
           </div>
         )}
       </Card>

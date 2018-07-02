@@ -4,6 +4,7 @@ import { PropTypes as MobxPropTypes } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Repository from './Repository';
+import EmptyList from '../EmptyList';
 
 const styles = theme => ({
   repositories: {
@@ -14,6 +15,7 @@ const styles = theme => ({
 class Repositories extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
     repositories: PropTypes.oneOfType([
       PropTypes.array,
       MobxPropTypes.observableArray
@@ -21,10 +23,10 @@ class Repositories extends Component {
   };
 
   render() {
-    const { repositories, classes } = this.props;
+    const { title, repositories, classes } = this.props;
 
-    if (!repositories) {
-      return null;
+    if (!repositories.length) {
+      return <EmptyList objects={title} />;
     }
 
     return (
